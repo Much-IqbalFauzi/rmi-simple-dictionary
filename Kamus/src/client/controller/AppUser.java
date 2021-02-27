@@ -6,13 +6,16 @@
 package client.controller;
 
 import interfaces.historyinterface;
+import interfaces.translateinterface;
 import interfaces.userinterface;
 import java.net.MalformedURLException;
 import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
 import models.History;
+import models.Translata;
 import models.User;
 
 /**
@@ -23,6 +26,7 @@ public class AppUser {
     
     private userinterface uice = null;
     private historyinterface hice = null;
+    private translateinterface tice = null;
     
     public void SetRemoteUser() throws NotBoundException, MalformedURLException, RemoteException {
         this.uice = (userinterface) Naming.lookup("rmi://127.0.0.1:2929/user");
@@ -30,6 +34,10 @@ public class AppUser {
     
     public void SetRemoteHistory() throws NotBoundException, MalformedURLException, RemoteException {
         this.hice = (historyinterface) Naming.lookup("rmi://127.0.0.1:2929/history");
+    }
+    
+    public void SetRemoteTranslate() throws NotBoundException, MalformedURLException, RemoteException {
+        this.tice = (translateinterface) Naming.lookup("rmi://127.0.0.1:2929/translate");
     }
     
     public int LoginCheck(String username, String password) throws RemoteException {
@@ -59,6 +67,10 @@ public class AppUser {
         return hice.getHistoryByUsername(username);
     }
     
+    public List<String> TextTranslate(String text) throws RemoteException {
+        return tice.DataByKey(text);
+    }
+    
     public void CheckUserRemote() throws NotBoundException, MalformedURLException, RemoteException {
         if(uice == null) {
             SetRemoteUser();
@@ -68,6 +80,12 @@ public class AppUser {
     public void CheckHistoryRemote() throws NotBoundException, MalformedURLException, RemoteException {
         if(hice == null) {
             SetRemoteHistory();
+        }
+    }
+    
+    public void CheckTranslateRemote() throws NotBoundException, MalformedURLException, RemoteException {
+        if(tice == null) {
+            SetRemoteTranslate();
         }
     }
     

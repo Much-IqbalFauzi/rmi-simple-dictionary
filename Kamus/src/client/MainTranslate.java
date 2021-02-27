@@ -5,15 +5,15 @@
  */
 package client;
 
-import client.controller.AppLogin;
 import client.controller.AppUser;
-import interfaces.historyinterface;
-import interfaces.userinterface;
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.History;
 import models.User;
@@ -33,6 +33,7 @@ public class MainTranslate extends javax.swing.JFrame {
         initComponents();
         userControl.CheckUserRemote();
         userControl.CheckHistoryRemote();
+        userControl.CheckTranslateRemote();
 //        AppLogin appLogin = new AppLogin();
 //        uice = appLogin.uice;
 //        hice = appLogin.hice;
@@ -40,6 +41,24 @@ public class MainTranslate extends javax.swing.JFrame {
 //        this.uice = uice;
         Load(userControl.AllHistory(user));
         SetUserField(userControl.UserInfo(user));
+    }
+    
+    private void Translate() throws RemoteException{
+        List<String> result = userControl.TextTranslate(area_bahasa_asal.getText());
+        String show = "";
+        if (result.size() >= 1) {
+            for (int i=0; i<result.size(); i+=1) {
+                if(i<result.size()-1) {
+                    show += result.get(i);
+                    show += ",\n";
+                } else {
+                    show += result.get(i);
+                }
+            }
+        } else {
+            show = "Data not found!";
+        }
+        area_bahasa_tujuan.setText(show);
     }
     
     private void Load(List<History> histories) {
@@ -86,10 +105,7 @@ public class MainTranslate extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         area_bahasa_tujuan = new javax.swing.JTextArea();
         jScrollPane2 = new javax.swing.JScrollPane();
-        area_bahasa_dari = new javax.swing.JTextArea();
-        reverse = new javax.swing.JButton();
-        combo_bahasa_dari = new javax.swing.JComboBox<>();
-        comba_bahasa_tujuan = new javax.swing.JComboBox<>();
+        area_bahasa_asal = new javax.swing.JTextArea();
         translate_button = new javax.swing.JButton();
         unit_history = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
@@ -176,57 +192,42 @@ public class MainTranslate extends javax.swing.JFrame {
         area_bahasa_tujuan.setRows(5);
         jScrollPane1.setViewportView(area_bahasa_tujuan);
 
-        area_bahasa_dari.setColumns(20);
-        area_bahasa_dari.setRows(5);
-        jScrollPane2.setViewportView(area_bahasa_dari);
-
-        reverse.setText("<>");
-
-        combo_bahasa_dari.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
-
-        comba_bahasa_tujuan.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Item 1", "Item 2", "Item 3", "Item 4" }));
+        area_bahasa_asal.setColumns(20);
+        area_bahasa_asal.setRows(5);
+        jScrollPane2.setViewportView(area_bahasa_asal);
 
         translate_button.setText(">>");
+        translate_button.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                translate_buttonActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout unit_translateLayout = new javax.swing.GroupLayout(unit_translate);
         unit_translate.setLayout(unit_translateLayout);
         unit_translateLayout.setHorizontalGroup(
             unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(unit_translateLayout.createSequentialGroup()
-                .addGap(21, 21, 21)
-                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(combo_bahasa_dari, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(17, 17, 17)
+                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
-                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addGroup(unit_translateLayout.createSequentialGroup()
-                        .addComponent(reverse)
-                        .addGap(82, 82, 82)
-                        .addComponent(comba_bahasa_tujuan, javax.swing.GroupLayout.PREFERRED_SIZE, 159, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addGroup(unit_translateLayout.createSequentialGroup()
-                        .addComponent(translate_button)
-                        .addGap(18, 18, 18)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addComponent(translate_button)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(19, 19, 19))
         );
         unit_translateLayout.setVerticalGroup(
             unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(unit_translateLayout.createSequentialGroup()
+                .addGap(109, 109, 109)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
+                    .addComponent(jScrollPane1))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, unit_translateLayout.createSequentialGroup()
-                .addContainerGap(77, Short.MAX_VALUE)
-                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(combo_bahasa_dari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(reverse)
-                    .addComponent(comba_bahasa_tujuan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(unit_translateLayout.createSequentialGroup()
-                        .addGap(68, 68, 68)
-                        .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 190, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                    .addGroup(unit_translateLayout.createSequentialGroup()
-                        .addGap(147, 147, 147)
-                        .addComponent(translate_button)))
-                .addGap(69, 69, 69))
+                .addContainerGap(213, Short.MAX_VALUE)
+                .addComponent(translate_button)
+                .addGap(185, 185, 185))
         );
 
         panel_content.add(unit_translate, "card2");
@@ -403,6 +404,14 @@ public class MainTranslate extends javax.swing.JFrame {
         panel_content.revalidate();
     }//GEN-LAST:event_history_viewActionPerformed
 
+    private void translate_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_translate_buttonActionPerformed
+        try {
+            Translate();
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_translate_buttonActionPerformed
+
     /**
      * @param args the command line arguments
      */
@@ -439,10 +448,8 @@ public class MainTranslate extends javax.swing.JFrame {
 //    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JTextArea area_bahasa_dari;
+    private javax.swing.JTextArea area_bahasa_asal;
     private javax.swing.JTextArea area_bahasa_tujuan;
-    private javax.swing.JComboBox<String> comba_bahasa_tujuan;
-    private javax.swing.JComboBox<String> combo_bahasa_dari;
     private javax.swing.JTextArea edit_bio;
     private javax.swing.JTextField edit_email;
     private javax.swing.JTextField edit_nama;
@@ -461,7 +468,6 @@ public class MainTranslate extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JButton logout;
     private javax.swing.JPanel panel_content;
-    private javax.swing.JButton reverse;
     private javax.swing.JButton save_user;
     private javax.swing.JTable tabel_history;
     private javax.swing.JButton translate_button;

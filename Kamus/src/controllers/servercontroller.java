@@ -18,7 +18,8 @@ public class servercontroller {
 
     private Registry reg;
     private userimplementation userservice;
-    private historyimplementation historyservice ;
+    private historyimplementation historyservice;
+    private translateimplementation transervice;
     private boolean status; 
 
     private static servercontroller server = null;
@@ -39,10 +40,12 @@ public class servercontroller {
         setReg(LocateRegistry.createRegistry(2929));
 
         setUserservice( new userimplementation());
-        setHistoryservice(new historyimplementation() );
+        setHistoryservice(new historyimplementation());
+        setTranservice(new translateimplementation());
         
         getReg().rebind("user", getUserservice());
         getReg().rebind("history", getHistoryservice());
+        getReg().rebind("translate", getTranservice());
     }
 
     public void turnOff() throws RemoteException {
@@ -71,6 +74,14 @@ public class servercontroller {
 
     public void setHistoryservice(historyimplementation historyservice) throws RemoteException {
         this.historyservice = historyservice;
+    }
+
+    public translateimplementation getTranservice(){
+        return transervice;
+    }
+
+    public void setTranservice(translateimplementation transervice) throws RemoteException {
+        this.transervice = transervice;
     }
 
     public boolean isStatus() {

@@ -6,7 +6,6 @@
 package controllers;
 
 import interfaces.userinterface;
-import java.io.Serializable;
 import java.rmi.RemoteException;
 import java.rmi.server.UnicastRemoteObject;
 import java.sql.Connection;
