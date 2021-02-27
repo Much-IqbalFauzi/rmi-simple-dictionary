@@ -28,13 +28,13 @@ public class translateimplementation extends UnicastRemoteObject implements tran
     }
 
     @Override
-    public List<String> DataByKey(String from) throws RemoteException {
+    public List<String> DataByKey(String targetText) throws RemoteException {
         List<String> data = new ArrayList<>();
-        String query = "SELECT * FROM en_spain WHERE en LIKE '%?%' ";
+        String query = "SELECT * FROM en_spain WHERE en= ? ";
         
         try {
             PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, from);
+            statement.setString(1, targetText);
             ResultSet hasil = statement.executeQuery();
 
             while (hasil.next()) {

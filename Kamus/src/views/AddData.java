@@ -20,7 +20,7 @@ import models.User;
  *
  * @author JESSI
  */
-public class HistoryView extends javax.swing.JFrame {
+public class AddData extends javax.swing.JFrame {
 
     /**
      * Creates new form MainView
@@ -28,11 +28,10 @@ public class HistoryView extends javax.swing.JFrame {
     public boolean status = false;
     private historyimplementation con;
     
-    public HistoryView(boolean status) throws RemoteException {
+    public AddData(boolean status) throws RemoteException {
         initComponents();
         this.status = status;
         con = new historyimplementation();
-        load(con.getAllHistory());
     }
     
     
@@ -53,10 +52,10 @@ public class HistoryView extends javax.swing.JFrame {
         btnSetting = new javax.swing.JButton();
         btnUser = new javax.swing.JButton();
         btnHistory = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
+        btnTrans = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        tblHistory = new javax.swing.JTable();
+        tabel_data = new javax.swing.JTable();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -86,10 +85,10 @@ public class HistoryView extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setText("Add data");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
+        btnTrans.setText("Add data");
+        btnTrans.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
+                btnTransActionPerformed(evt);
             }
         });
 
@@ -103,7 +102,7 @@ public class HistoryView extends javax.swing.JFrame {
                     .addComponent(btnSetting, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
                     .addComponent(btnUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addComponent(btnTrans, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -116,23 +115,25 @@ public class HistoryView extends javax.swing.JFrame {
                 .addGap(38, 38, 38)
                 .addComponent(btnHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(btnTrans, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(66, Short.MAX_VALUE))
         );
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Daftar History");
+        jLabel1.setText("Add data to dictionary");
 
-        tblHistory.setModel(new javax.swing.table.DefaultTableModel(
+        tabel_data.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-
+                {},
+                {},
+                {}
             },
             new String [] {
 
             }
         ));
-        jScrollPane1.setViewportView(tblHistory);
+        jScrollPane1.setViewportView(tabel_data);
 
         dspMain.setLayer(canvas1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dspMain.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
@@ -145,31 +146,31 @@ public class HistoryView extends javax.swing.JFrame {
             dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(dspMainLayout.createSequentialGroup()
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 514, Short.MAX_VALUE))
-                    .addGroup(dspMainLayout.createSequentialGroup()
+                        .addGap(0, 24, Short.MAX_VALUE)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(30, 30, 30)
+                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(26, Short.MAX_VALUE))
+                    .addGroup(dspMainLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addGap(0, 0, Short.MAX_VALUE)))
-                .addContainerGap())
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
         dspMainLayout.setVerticalGroup(
             dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
             .addGroup(dspMainLayout.createSequentialGroup()
+                .addGap(40, 40, 40)
+                .addComponent(jLabel1)
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(150, 150, 150)
+                        .addGap(81, 81, 81)
                         .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(33, 33, 33)
-                        .addComponent(jLabel1)
-                        .addGap(27, 27, 27)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 331, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(26, 26, 26)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -210,30 +211,16 @@ public class HistoryView extends javax.swing.JFrame {
         view.setVisible(true);
     }//GEN-LAST:event_btnUserActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
+    private void btnTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
-    private void load(List<History> histories) {
-        String header[] = {"ID", "FROM", "TO", "MESSAGE","RESULT", "USERNAME", "DATETIME"};
-        String[][] data = new String[histories.size()][7];
-        for (int i = 0; i < data.length; i++) {
-            data[i][0] = String.valueOf(histories.get(i).getId());
-            data[i][1] = histories.get(i).getLanguage_id_from();
-            data[i][2] = histories.get(i).getLanguage_id_to();
-            data[i][3] = histories.get(i).getMessage_from();
-            data[i][4] = histories.get(i).getMessage_to();
-            data[i][5] = histories.get(i).getUser();
-            data[i][6] = histories.get(i).getDatetime();
-        }
-        DefaultTableModel defaultTableModel = new DefaultTableModel(data, header);
-        tblHistory.setModel(defaultTableModel);
-    }
+    }//GEN-LAST:event_btnTransActionPerformed
+    
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnHistory;
     private javax.swing.JButton btnSetting;
+    private javax.swing.JButton btnTrans;
     private javax.swing.JButton btnUser;
     private java.awt.Canvas canvas1;
     private javax.swing.JDesktopPane dspMain;
@@ -241,6 +228,6 @@ public class HistoryView extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable tblHistory;
+    private javax.swing.JTable tabel_data;
     // End of variables declaration//GEN-END:variables
 }
