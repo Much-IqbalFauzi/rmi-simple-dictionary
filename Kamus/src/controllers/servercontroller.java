@@ -36,13 +36,13 @@ public class servercontroller {
     }
    
     public void turnOn() throws RemoteException {
-        setReg(LocateRegistry.createRegistry(292));
+        setReg(LocateRegistry.createRegistry(2929));
 
         setUserservice( new userimplementation());
         setHistoryservice(new historyimplementation() );
         
         getReg().rebind("user", getUserservice());
-        getReg().rebind("nistory", getHistoryservice());
+        getReg().rebind("history", getHistoryservice());
     }
 
     public void turnOff() throws RemoteException {

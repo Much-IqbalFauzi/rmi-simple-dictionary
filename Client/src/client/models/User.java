@@ -3,19 +3,14 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-package models;
-
-import java.io.Serializable;
+package client.models;
 
 /**
  *
- * @author JESSI
+ * @author iqbalfauzi
  */
-public class User implements Serializable{
-    
+public class User {
     private String username, nama, email, password, bio;
-    
-    public User() {}
 
     public User(String username, String nama, String email, String password, String bio) {
         this.username = username;
@@ -64,8 +59,4 @@ public class User implements Serializable{
     public void setBio(String bio) {
         this.bio = bio;
     }
-    
-    
-    
-    
 }

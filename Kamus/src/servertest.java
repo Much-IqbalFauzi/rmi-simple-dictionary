@@ -21,7 +21,7 @@ import models.User;
 public class servertest {
 
     public static void main(String[] args) throws RemoteException {
-        Registry reg = LocateRegistry.createRegistry(292);
+        Registry reg = LocateRegistry.createRegistry(2929);
         userimplementation userservice = new userimplementation();
         historyimplementation historyservice = new historyimplementation();
 

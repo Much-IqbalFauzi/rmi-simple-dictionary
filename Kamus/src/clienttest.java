@@ -23,7 +23,7 @@ public class clienttest  {
         String respons = "";
         BufferedReader masuk = new BufferedReader(new InputStreamReader(System.in));
         
-        userinterface lif = (userinterface) Naming.lookup("rmi://127.0.0.1:292/user");
+        userinterface lif = (userinterface) Naming.lookup("rmi://127.0.0.1:2929/user");
         System.out.println("tersambung...");
         
     
