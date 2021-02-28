@@ -75,6 +75,14 @@ public class AppUser {
         return hice.getHistoryByUsername(username);
     }
     
+    public boolean AddHistory(History history) throws RemoteException {
+        boolean res = false;
+        if(hice.insertHistory(history)){
+            res = true;
+        }
+        return res;
+    }
+    
     public List<Translata> TextTranslate(String text) throws RemoteException {
         return tice.DataByKey(text);
     }

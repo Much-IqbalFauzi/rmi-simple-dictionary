@@ -5,6 +5,7 @@
  */
 package client;
 
+import client.controller.AppLogin;
 import client.controller.AppUser;
 import java.net.MalformedURLException;
 import java.rmi.NotBoundException;
@@ -72,6 +73,14 @@ public class MainTranslate extends javax.swing.JFrame {
         }
         area_relateble.setText(showRelated);
         area_bahasa_tujuan.setText(show);
+        
+        AddToHistory(show);
+    }
+    
+    public void AddToHistory(String result) throws RemoteException {
+        History history = new History(
+                text_dari.getText(), text_tujuan.getText(), area_bahasa_asal.getText(), result, userInfo.getUsername());
+        userControl.AddHistory(history);
     }
     
     private void TranslateReverse() throws RemoteException {
