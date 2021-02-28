@@ -5,12 +5,8 @@
  */
 package client;
 
-import client.controller.AppLogin;
 import client.controller.AppUser;
-import interfaces.userinterface;
-import java.io.IOException;
 import java.net.MalformedURLException;
-import java.rmi.Naming;
 import java.rmi.NotBoundException;
 import java.rmi.RemoteException;
 import java.util.logging.Level;
@@ -31,6 +27,7 @@ public class Login extends javax.swing.JFrame {
     private AppUser userControl = null ;
     public Login() throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
+        setLocationRelativeTo(null);
         setResizable(false);
         setVisible(true);
         
@@ -92,8 +89,9 @@ public class Login extends javax.swing.JFrame {
         jLabel5.setText("Don't have account? register");
 
         register_hidden_button.setFont(new java.awt.Font("FreeMono", 3, 14)); // NOI18N
-        register_hidden_button.setForeground(new java.awt.Color(255, 255, 153));
+        register_hidden_button.setForeground(new java.awt.Color(51, 51, 255));
         register_hidden_button.setText("Here");
+        register_hidden_button.setToolTipText("Account register");
         register_hidden_button.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
                 register_hidden_buttonMouseClicked(evt);

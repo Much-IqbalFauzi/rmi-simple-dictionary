@@ -24,8 +24,8 @@ public class MainView extends javax.swing.JFrame {
     
     
     public MainView(boolean status) {
-        System.out.println("aaaaaa");
         initComponents();
+        setLocationRelativeTo(null);
         this.con = servercontroller.getserver();
         if (con.isStatus()) {
             btnOn.setEnabled(false);
@@ -56,7 +56,6 @@ public class MainView extends javax.swing.JFrame {
         btnSetting = new javax.swing.JButton();
         btnUser = new javax.swing.JButton();
         btnHistory = new javax.swing.JButton();
-        btnAdd = new javax.swing.JButton();
         btnOff = new javax.swing.JButton();
         btnOn = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -91,13 +90,6 @@ public class MainView extends javax.swing.JFrame {
             }
         });
 
-        btnAdd.setText("Add data");
-        btnAdd.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnAddActionPerformed(evt);
-            }
-        });
-
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
@@ -107,8 +99,7 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(btnSetting, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addComponent(btnHistory, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE)
-                    .addComponent(btnUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(btnAdd, javax.swing.GroupLayout.DEFAULT_SIZE, 103, Short.MAX_VALUE))
+                    .addComponent(btnUser, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(29, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -120,8 +111,6 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(btnUser, javax.swing.GroupLayout.PREFERRED_SIZE, 45, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(38, 38, 38)
                 .addComponent(btnHistory, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(38, 38, 38)
-                .addComponent(btnAdd, javax.swing.GroupLayout.PREFERRED_SIZE, 46, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -280,10 +269,6 @@ public class MainView extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_btnOnActionPerformed
 
-    private void btnAddActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAddActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_btnAddActionPerformed
-
     /**
      * @param args the command line arguments
      */
@@ -321,7 +306,6 @@ public class MainView extends javax.swing.JFrame {
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton btnAdd;
     private javax.swing.JButton btnHistory;
     private javax.swing.JButton btnOff;
     private javax.swing.JButton btnOn;

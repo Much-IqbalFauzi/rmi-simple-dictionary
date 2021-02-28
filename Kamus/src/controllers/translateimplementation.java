@@ -67,38 +67,4 @@ public class translateimplementation extends UnicastRemoteObject implements tran
         return data;
     }
     
-    //server only
-    public boolean AddKamus(Translata kamus) throws RemoteException {
-        boolean result = false;
-        String query = "INSERT INTO en_spain VALUES (null, ?,?)";
-        try {
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, kamus.getEn());
-            statement.setString(2, kamus.getSpain());
-            statement.executeUpdate();
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        return result;
-    }
-    
-    public boolean EditKamus(Translata kamus) {
-        boolean result = false;
-        String query = "UPDATE en_spain SET en=?, spain=? WHERE id=? ";
-        try {
-            PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, kamus.getEn());
-            statement.setString(2, kamus.getSpain());
-            statement.setInt(3, kamus.getId());
-            statement.executeUpdate();
-            result = true;
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-        
-        return result;
-    }
-    
 }
