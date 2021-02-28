@@ -5,11 +5,13 @@
  */
 package models;
 
+import java.io.Serializable;
+
 /**
  *
  * @author iqbalfauzi
  */
-public class Translata {
+public class Translata implements Serializable{
     private int id;
     private String en, spain;
     

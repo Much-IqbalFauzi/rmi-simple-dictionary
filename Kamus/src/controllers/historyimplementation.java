@@ -65,7 +65,7 @@ public class historyimplementation extends UnicastRemoteObject implements histor
 
             while (hasil.next()) {
                 String datetime = convertDatetoString(hasil.getDate("datetime")) + " " + convertTimetoString(hasil.getTime("datetime"));
-                History history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_from"), hasil.getString("message_from"),
+                History history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_to"), hasil.getString("message_from"),
                         hasil.getString("message_to"), hasil.getString("user"), datetime);
                 data.add(history);
             }
@@ -73,7 +73,7 @@ public class historyimplementation extends UnicastRemoteObject implements histor
         } catch (Exception e) {
             e.printStackTrace();
         }
-
+        System.out.println(data);
         return data;
     }
 
@@ -88,7 +88,7 @@ public class historyimplementation extends UnicastRemoteObject implements histor
 
             while (hasil.next()) {
                 String datetime = convertDatetoString(hasil.getDate("datetime")) + " " +convertTimetoString(hasil.getTime("datetime"));
-                History history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_from"), hasil.getString("message_from"),
+                History history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_to"), hasil.getString("message_from"),
                         hasil.getString("message_to"), hasil.getString("user"), datetime);
                 data.add(history);
             }
@@ -112,7 +112,7 @@ public class historyimplementation extends UnicastRemoteObject implements histor
 
             while (hasil.next()) {
                 String datetime = convertDatetoString(hasil.getDate("datetime")) + " " + convertTimetoString(hasil.getTime("datetime"));
-                history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_from"), hasil.getString("message_from"),
+                history = new History(hasil.getInt("id"), hasil.getString("language_id_from"), hasil.getString("language_id_to"), hasil.getString("message_from"),
                         hasil.getString("message_to"), hasil.getString("user"), datetime);
             }
 

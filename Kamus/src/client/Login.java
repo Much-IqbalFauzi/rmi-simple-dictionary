@@ -28,13 +28,13 @@ public class Login extends javax.swing.JFrame {
     /**
      * Creates new form Login
      */
-    private AppUser userControl = new AppUser();
+    private AppUser userControl = null ;
     public Login() throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
         setResizable(false);
         setVisible(true);
         
-        userControl.CheckUserRemote();
+        userControl = AppUser.getappuser();
     }
 
     /**
@@ -185,12 +185,17 @@ public class Login extends javax.swing.JFrame {
         } catch (RemoteException ex) {
             Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
         }
-        
+        System.out.println(result);
         if(result == 200) {
             JOptionPane.showMessageDialog(this, "Login success!");
             this.dispose();
+            System.out.println("aa");
             try {
+                System.out.println("aa");
                 new MainTranslate(login_username.getText()).setVisible(true);
+                System.out.println("aa");
+                this.setVisible(false);
+                System.out.println("SUKSES LOGIN!!!");
             } catch (NotBoundException ex) {
                 Logger.getLogger(Login.class.getName()).log(Level.SEVERE, null, ex);
             } catch (MalformedURLException ex) {

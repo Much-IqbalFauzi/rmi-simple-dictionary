@@ -30,11 +30,31 @@ public class translateimplementation extends UnicastRemoteObject implements tran
     @Override
     public List<Translata> DataByKey(String targetText) throws RemoteException {
         List<Translata> data = new ArrayList<>();
-        String query = "SELECT * FROM en_spain WHERE en LIKE %?% ";
+        String query = "SELECT * FROM en_spain WHERE en LIKE ? ";
         
         try {
             PreparedStatement statement = con.prepareStatement(query);
-            statement.setString(1, targetText);
+            statement.setString(1, "%" + targetText + "%");
+            ResultSet hasil = statement.executeQuery();
+
+            while (hasil.next()) {
+                Translata tObj = new Translata(hasil.getInt("id"), hasil.getString("en"), hasil.getString("spain"));
+                data.add(tObj);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return data;
+    }
+    
+    @Override
+    public List<Translata> DataByKeyReverse(String targetText) throws RemoteException {
+        List<Translata> data = new ArrayList<>();
+        String query = "SELECT * FROM en_spain WHERE spain LIKE ? ";
+        
+        try {
+            PreparedStatement statement = con.prepareStatement(query);
+            statement.setString(1, "%" + targetText + "%");
             ResultSet hasil = statement.executeQuery();
 
             while (hasil.next()) {

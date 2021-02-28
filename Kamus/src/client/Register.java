@@ -26,11 +26,11 @@ public class Register extends javax.swing.JFrame {
      * Creates new form Register
      */
     
-    private AppUser userControl = new AppUser();
+    private AppUser userControl = null;
     
     public Register() throws NotBoundException, MalformedURLException, RemoteException{
         initComponents();
-        userControl.CheckUserRemote();
+        userControl = AppUser.getappuser();
 //        uice = (userinterface) Naming.lookup("rmi://127.0.0.1:2929/user");
         
     }

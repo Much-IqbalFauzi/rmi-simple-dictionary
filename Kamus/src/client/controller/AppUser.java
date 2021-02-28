@@ -23,28 +23,34 @@ import models.User;
  * @author iqbalfauzi
  */
 public class AppUser {
-    
-    private userinterface uice = null;
-    private historyinterface hice = null;
-    private translateinterface tice = null;
-    
-    public void SetRemoteUser() throws NotBoundException, MalformedURLException, RemoteException {
-        this.uice = (userinterface) Naming.lookup("rmi://127.0.0.1:2929/user");
+
+    private static userinterface uice = null;
+    private static historyinterface hice = null;
+    private static translateinterface tice = null;
+
+    private static AppUser appuser = null;
+
+    private AppUser() {
     }
-    
-    public void SetRemoteHistory() throws NotBoundException, MalformedURLException, RemoteException {
-        this.hice = (historyinterface) Naming.lookup("rmi://127.0.0.1:2929/history");
+
+    public static AppUser getappuser() throws NotBoundException, MalformedURLException, RemoteException {
+        if (appuser == null) {
+            appuser = new AppUser();
+            uice = (userinterface) Naming.lookup("rmi://127.0.0.1:2929/user");
+            hice = (historyinterface) Naming.lookup("rmi://127.0.0.1:2929/history");
+            tice = (translateinterface)  Naming.lookup("rmi://127.0.0.1:2929/translate");
+            
+        }
+        return appuser;
     }
-    
-    public void SetRemoteTranslate() throws NotBoundException, MalformedURLException, RemoteException {
-        this.tice = (translateinterface) Naming.lookup("rmi://127.0.0.1:2929/translate");
-    }
-    
+
     public int LoginCheck(String username, String password) throws RemoteException {
         int res = 0;
-        if(uice.isUserExist(username)) {
-            if(uice.isUserValid(username, password)){
+        System.out.println("IN LOGIN CHECK");
+        if (uice.isUserExist(username)) {
+            if (uice.isUserValid(username, password)) {
                 res = 200;
+                System.out.println("VALIDD WOEY");
             } else {
                 res = 500;
             }
@@ -53,56 +59,44 @@ public class AppUser {
         }
         return res;
     }
-    
+
     public User UserInfo(String name) throws RemoteException {
         return uice.getUserByUsername(name);
     }
-    
+
     public boolean UserUpdate(User user) throws RemoteException {
-        if(uice.updateUser(user)) {
+        if (uice.updateUser(user)) {
             return true;
         } else {
             return false;
         }
     }
-    
+
     public boolean UserRegister(User user) throws RemoteException {
         boolean res = uice.insertUser(user);
         return res;
     }
-    
+
     public List<History> AllHistory(String username) throws RemoteException {
+        
+        System.out.println("in app user");
         return hice.getHistoryByUsername(username);
     }
-    
+
     public boolean AddHistory(History history) throws RemoteException {
         boolean res = false;
-        if(hice.insertHistory(history)){
+        if (hice.insertHistory(history)) {
             res = true;
         }
         return res;
     }
-    
+
     public List<Translata> TextTranslate(String text) throws RemoteException {
         return tice.DataByKey(text);
     }
     
-    public void CheckUserRemote() throws NotBoundException, MalformedURLException, RemoteException {
-        if(uice == null) {
-            SetRemoteUser();
-        }
+    public List<Translata> TextTranslateReverse(String text) throws RemoteException {
+        return tice.DataByKeyReverse(text);
     }
-    
-    public void CheckHistoryRemote() throws NotBoundException, MalformedURLException, RemoteException {
-        if(hice == null) {
-            SetRemoteHistory();
-        }
-    }
-    
-    public void CheckTranslateRemote() throws NotBoundException, MalformedURLException, RemoteException {
-        if(tice == null) {
-            SetRemoteTranslate();
-        }
-    }
-    
+
 }

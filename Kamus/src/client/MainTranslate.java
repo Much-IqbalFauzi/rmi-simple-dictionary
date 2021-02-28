@@ -32,12 +32,11 @@ public class MainTranslate extends javax.swing.JFrame {
      */
     private boolean reverseBahasa = true;
     private User userInfo;
-    private AppUser userControl = new AppUser();
+    private AppUser userControl = null;
+    
     public MainTranslate(String user) throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
-        userControl.CheckUserRemote();
-        userControl.CheckHistoryRemote();
-        userControl.CheckTranslateRemote();
+        userControl = AppUser.getappuser();
         Load(userControl.AllHistory(user));
         userInfo = userControl.UserInfo(user);
         SetUserField(userInfo);
@@ -84,30 +83,33 @@ public class MainTranslate extends javax.swing.JFrame {
     }
     
     private void TranslateReverse() throws RemoteException {
-        List<Translata> result = userControl.TextTranslate(area_bahasa_asal.getText());
+        List<Translata> result = userControl.TextTranslateReverse(area_bahasa_asal.getText());
         String show = "";
         String showRelated = "";
         if (result.size() >= 1) {
             for (int i=0; i<result.size(); i+=1) {
                 if(i<result.size()-1) {
-                    show += result.get(i).getEn();
+                    show += result.get(i).getSpain();
                     show += ",\n";
-                    showRelated += result.get(i).getSpain();
+                    showRelated += result.get(i).getEn();
                     showRelated += ",\n";
                 } else {
-                    show += result.get(i).getEn();
-                    showRelated += result.get(i).getSpain();
+                    show += result.get(i).getSpain();
+                    showRelated += result.get(i).getEn();
                 }
             }
         } else {
             show = "Data not found!";
             showRelated = "No relateble word!";
         }
-        area_relateble.setText(showRelated);
-        area_bahasa_tujuan.setText(show);
+        area_relateble.setText(show);
+        area_bahasa_tujuan.setText(showRelated);
+        
+        AddToHistory(show);
     }
     
     private void Load(List<History> histories) {
+        System.out.println("HISTORYY"+ histories);
         String header[] = {"ID", "FROM", "TO", "MESSAGE","RESULT", "USERNAME", "DATETIME"};
         String[][] data = new String[histories.size()][7];
         for (int i = 0; i < data.length; i++) {
@@ -559,32 +561,40 @@ public class MainTranslate extends javax.swing.JFrame {
      */
 //    public static void main(String args[]) {
 //        /* Set the Nimbus look and feel */
-//        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
-//        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
-//         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
-//         */
-//        try {
-//            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
-//                if ("Nimbus".equals(info.getName())) {
-//                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
-//                    break;
-//                }
-//            }
-//        } catch (ClassNotFoundException ex) {
-//            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (InstantiationException ex) {
-//            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (IllegalAccessException ex) {
-//            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
-//            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
-//        }
-//        //</editor-fold>
+////        //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
+////        /* If Nimbus (introduced in Java SE 6) is not available, stay with the default look and feel.
+////         * For details see http://download.oracle.com/javase/tutorial/uiswing/lookandfeel/plaf.html 
+////         */
+////        try {
+////            for (javax.swing.UIManager.LookAndFeelInfo info : javax.swing.UIManager.getInstalledLookAndFeels()) {
+////                if ("Nimbus".equals(info.getName())) {
+////                    javax.swing.UIManager.setLookAndFeel(info.getClassName());
+////                    break;
+////                }
+////            }
+////        } catch (ClassNotFoundException ex) {
+////            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+////        } catch (InstantiationException ex) {
+////            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+////        } catch (IllegalAccessException ex) {
+////            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+////        } catch (javax.swing.UnsupportedLookAndFeelException ex) {
+////            java.util.logging.Logger.getLogger(MainTranslate.class.getName()).log(java.util.logging.Level.SEVERE, null, ex);
+////        }
+////        //</editor-fold>
 //
 //        /* Create and display the form */
 //        java.awt.EventQueue.invokeLater(new Runnable() {
 //            public void run() {
-//                new MainTranslate().setVisible(true);
+//                try {
+//                    new MainTranslate("jessifebria").setVisible(true);
+//                } catch (NotBoundException ex) {
+//                    Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (MalformedURLException ex) {
+//                    Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
+//                } catch (RemoteException ex) {
+//                    Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
+//                }
 //            }
 //        });
 //    }

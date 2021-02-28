@@ -5,9 +5,7 @@
  */
 package client.controller;
 
-import com.google.api.translate.Language;
-import com.google.api.translate.Translate;
-import com.google.api.translate.TranslatorFrame;
+
 import com.sun.java.accessibility.util.Translator;
 import interfaces.historyinterface;
 import interfaces.userinterface;
@@ -28,8 +26,6 @@ public class AppLogin {
     //LUPAKAN CLASS INI
     public static userinterface uice;
     public static historyinterface hice;
-    Translate transl;
-    Language lang;
     
     
     public AppLogin() throws NotBoundException, MalformedURLException, RemoteException {

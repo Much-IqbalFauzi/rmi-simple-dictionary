@@ -5,6 +5,7 @@
  */
 package models;
 
+import java.io.Serializable;
 import java.sql.Time;
 import java.util.Date;
 
@@ -12,7 +13,7 @@ import java.util.Date;
  *
  * @author JESSI
  */
-public class History {
+public class History implements Serializable{
 
     private String language_id_from, language_id_to, message_from, message_to, user, datetime;
     private int id;

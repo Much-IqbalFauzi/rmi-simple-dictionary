@@ -16,5 +16,6 @@ import models.Translata;
  */
 public interface translateinterface extends Remote {
     public List<Translata> DataByKey(String from) throws RemoteException;
+    public List<Translata> DataByKeyReverse(String from) throws RemoteException;
     
 }
