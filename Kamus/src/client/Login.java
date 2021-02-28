@@ -63,11 +63,11 @@ public class Login extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Hack", 1, 36)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("PORTAL");
+        jLabel1.setText("Dictionary");
 
         jLabel2.setFont(new java.awt.Font("Hack", 1, 36)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Kamus");
+        jLabel2.setText("Portal");
 
         login_username.setFont(new java.awt.Font("FreeMono", 0, 16)); // NOI18N
 

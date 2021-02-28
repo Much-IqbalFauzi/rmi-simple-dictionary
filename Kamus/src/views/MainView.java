@@ -125,14 +125,14 @@ public class MainView extends javax.swing.JFrame {
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
-        btnOff.setText("Matikan Server ");
+        btnOff.setText("Turn Off Server ");
         btnOff.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOffActionPerformed(evt);
             }
         });
 
-        btnOn.setText("Nyalakan Server");
+        btnOn.setText("Turn On Server");
         btnOn.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnOnActionPerformed(evt);
@@ -141,11 +141,11 @@ public class MainView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Selamat datang di Aplikasi Server Kamus");
+        jLabel1.setText("Welcome home to dictionay main Server");
 
         jLabel2.setFont(new java.awt.Font("Gloucester MT Extra Condensed", 0, 24)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel2.setText("Status Server : ");
+        jLabel2.setText("Server Status: ");
 
         txtStatus.setFont(new java.awt.Font("Gloucester MT Extra Condensed", 0, 24)); // NOI18N
         txtStatus.setForeground(new java.awt.Color(255, 255, 204));
@@ -167,25 +167,26 @@ public class MainView extends javax.swing.JFrame {
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(21, 21, 21)
-                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
                             .addGroup(dspMainLayout.createSequentialGroup()
-                                .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addGroup(dspMainLayout.createSequentialGroup()
-                                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                        .addGap(294, 294, 294))
-                                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dspMainLayout.createSequentialGroup()
-                                        .addGap(190, 190, 190)
-                                        .addComponent(jLabel2)))
-                                .addComponent(txtStatus)
-                                .addGap(19, 19, 19))
-                            .addComponent(btnOff, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnOn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGap(294, 294, 294))
+                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, dspMainLayout.createSequentialGroup()
+                                .addGap(211, 211, 211)
+                                .addComponent(jLabel2)))
+                        .addComponent(txtStatus)
+                        .addContainerGap(187, Short.MAX_VALUE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 85, Short.MAX_VALUE)
-                        .addComponent(jLabel1)
-                        .addGap(46, 46, 46))))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
+                                .addComponent(jLabel1)
+                                .addGap(46, 46, 46))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
+                                .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(btnOff, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                    .addComponent(btnOn, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addGap(192, 192, 192))))))
         );
         dspMainLayout.setVerticalGroup(
             dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -201,11 +202,11 @@ public class MainView extends javax.swing.JFrame {
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtStatus)
                     .addComponent(jLabel2))
-                .addGap(48, 48, 48)
+                .addGap(46, 46, 46)
                 .addComponent(btnOn, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(btnOff, javax.swing.GroupLayout.PREFERRED_SIZE, 50, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(146, 146, 146))
+                .addGap(148, 148, 148))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());

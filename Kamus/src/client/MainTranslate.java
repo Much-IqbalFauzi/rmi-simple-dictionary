@@ -13,9 +13,11 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.History;
+import models.Translata;
 import models.User;
 
 /**
@@ -27,37 +29,72 @@ public class MainTranslate extends javax.swing.JFrame {
     /**
      * Creates new form MainTranslate
      */
-    
+    private boolean reverseBahasa = true;
+    private User userInfo;
     private AppUser userControl = new AppUser();
     public MainTranslate(String user) throws NotBoundException, MalformedURLException, RemoteException {
         initComponents();
         userControl.CheckUserRemote();
         userControl.CheckHistoryRemote();
         userControl.CheckTranslateRemote();
-//        AppLogin appLogin = new AppLogin();
-//        uice = appLogin.uice;
-//        hice = appLogin.hice;
-//        this.userName = user;
-//        this.uice = uice;
         Load(userControl.AllHistory(user));
-        SetUserField(userControl.UserInfo(user));
+        userInfo = userControl.UserInfo(user);
+        SetUserField(userInfo);
+    }
+    
+    private void revere() {
+        String temp = "";
+        temp = text_dari.getText();
+        text_dari.setText(text_tujuan.getText());
+        text_tujuan.setText(temp);
+        reverseBahasa = !reverseBahasa;
     }
     
     private void Translate() throws RemoteException{
-        List<String> result = userControl.TextTranslate(area_bahasa_asal.getText());
+        List<Translata> result = userControl.TextTranslate(area_bahasa_asal.getText());
         String show = "";
+        String showRelated = "";
         if (result.size() >= 1) {
             for (int i=0; i<result.size(); i+=1) {
                 if(i<result.size()-1) {
-                    show += result.get(i);
+                    show += result.get(i).getSpain();
                     show += ",\n";
+                    showRelated += result.get(i).getEn();
+                    showRelated += ",\n";
                 } else {
-                    show += result.get(i);
+                    show += result.get(i).getSpain();
+                    showRelated += result.get(i).getEn();
                 }
             }
         } else {
             show = "Data not found!";
+            showRelated = "No relateble word!";
         }
+        area_relateble.setText(showRelated);
+        area_bahasa_tujuan.setText(show);
+    }
+    
+    private void TranslateReverse() throws RemoteException {
+        List<Translata> result = userControl.TextTranslate(area_bahasa_asal.getText());
+        String show = "";
+        String showRelated = "";
+        if (result.size() >= 1) {
+            for (int i=0; i<result.size(); i+=1) {
+                if(i<result.size()-1) {
+                    show += result.get(i).getEn();
+                    show += ",\n";
+                    showRelated += result.get(i).getSpain();
+                    showRelated += ",\n";
+                } else {
+                    show += result.get(i).getEn();
+                    showRelated += result.get(i).getSpain();
+                }
+            }
+        } else {
+            show = "Data not found!";
+            showRelated = "No relateble word!";
+        }
+        area_relateble.setText(showRelated);
         area_bahasa_tujuan.setText(show);
     }
     
@@ -94,12 +131,14 @@ public class MainTranslate extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jTextField1 = new javax.swing.JTextField();
         jPanel1 = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
         history_view = new javax.swing.JButton();
         translate_view = new javax.swing.JButton();
         view_user = new javax.swing.JLabel();
         logout = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
         panel_content = new javax.swing.JPanel();
         unit_translate = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -107,6 +146,12 @@ public class MainTranslate extends javax.swing.JFrame {
         jScrollPane2 = new javax.swing.JScrollPane();
         area_bahasa_asal = new javax.swing.JTextArea();
         translate_button = new javax.swing.JButton();
+        text_dari = new javax.swing.JLabel();
+        text_tujuan = new javax.swing.JLabel();
+        jLabel8 = new javax.swing.JLabel();
+        jScrollPane5 = new javax.swing.JScrollPane();
+        area_relateble = new javax.swing.JTextArea();
+        invert_bahasa = new javax.swing.JButton();
         unit_history = new javax.swing.JPanel();
         jScrollPane3 = new javax.swing.JScrollPane();
         tabel_history = new javax.swing.JTable();
@@ -122,6 +167,8 @@ public class MainTranslate extends javax.swing.JFrame {
         jLabel6 = new javax.swing.JLabel();
         edit_username = new javax.swing.JTextField();
         save_user = new javax.swing.JButton();
+
+        jTextField1.setText("jTextField1");
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -143,10 +190,18 @@ public class MainTranslate extends javax.swing.JFrame {
             }
         });
 
-        view_user.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        view_user.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
         view_user.setText("User");
+        view_user.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                view_userMouseClicked(evt);
+            }
+        });
 
         logout.setText("Logout");
+
+        jLabel1.setFont(new java.awt.Font("Dialog", 1, 18)); // NOI18N
+        jLabel1.setText("Hello");
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -159,25 +214,25 @@ public class MainTranslate extends javax.swing.JFrame {
                     .addComponent(translate_view, javax.swing.GroupLayout.PREFERRED_SIZE, 119, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20))
             .addGroup(jPanel2Layout.createSequentialGroup()
+                .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(logout))
-                    .addGroup(jPanel2Layout.createSequentialGroup()
-                        .addGap(54, 54, 54)
-                        .addComponent(view_user)))
+                    .addComponent(logout)
+                    .addComponent(view_user)
+                    .addComponent(jLabel1))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
-                .addGap(106, 106, 106)
+                .addGap(92, 92, 92)
+                .addComponent(jLabel1)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(view_user)
-                .addGap(109, 109, 109)
+                .addGap(102, 102, 102)
                 .addComponent(translate_view, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(29, 29, 29)
                 .addComponent(history_view, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 113, Short.MAX_VALUE)
                 .addComponent(logout)
                 .addGap(29, 29, 29))
         );
@@ -203,31 +258,71 @@ public class MainTranslate extends javax.swing.JFrame {
             }
         });
 
+        text_dari.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        text_dari.setText("English");
+
+        text_tujuan.setFont(new java.awt.Font("Dialog", 1, 14)); // NOI18N
+        text_tujuan.setText("Spain");
+
+        jLabel8.setText("Related word");
+
+        area_relateble.setColumns(20);
+        area_relateble.setRows(5);
+        jScrollPane5.setViewportView(area_relateble);
+
+        invert_bahasa.setText("<->");
+        invert_bahasa.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                invert_bahasaActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout unit_translateLayout = new javax.swing.GroupLayout(unit_translate);
         unit_translate.setLayout(unit_translateLayout);
         unit_translateLayout.setHorizontalGroup(
             unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(unit_translateLayout.createSequentialGroup()
                 .addGap(17, 17, 17)
-                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addComponent(jLabel8)
+                        .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(text_dari))
                 .addGap(18, 18, 18)
-                .addComponent(translate_button)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 30, Short.MAX_VALUE)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addComponent(invert_bahasa, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(translate_button, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 25, Short.MAX_VALUE)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(text_tujuan))
                 .addGap(19, 19, 19))
         );
         unit_translateLayout.setVerticalGroup(
             unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(unit_translateLayout.createSequentialGroup()
-                .addGap(109, 109, 109)
-                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(jScrollPane2, javax.swing.GroupLayout.DEFAULT_SIZE, 244, Short.MAX_VALUE)
-                    .addComponent(jScrollPane1))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, unit_translateLayout.createSequentialGroup()
-                .addContainerGap(213, Short.MAX_VALUE)
-                .addComponent(translate_button)
-                .addGap(185, 185, 185))
+                .addGap(58, 58, 58)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(text_tujuan)
+                    .addComponent(invert_bahasa)
+                    .addComponent(text_dari))
+                .addGap(29, 29, 29)
+                .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addGroup(unit_translateLayout.createSequentialGroup()
+                        .addGap(34, 34, 34)
+                        .addComponent(translate_button)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(unit_translateLayout.createSequentialGroup()
+                        .addGroup(unit_translateLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(unit_translateLayout.createSequentialGroup()
+                                .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 19, Short.MAX_VALUE)
+                                .addComponent(jLabel8)
+                                .addGap(18, 18, 18)
+                                .addComponent(jScrollPane5, javax.swing.GroupLayout.PREFERRED_SIZE, 104, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addGap(48, 48, 48))))
         );
 
         panel_content.add(unit_translate, "card2");
@@ -284,11 +379,16 @@ public class MainTranslate extends javax.swing.JFrame {
         edit_bio.setRows(5);
         jScrollPane4.setViewportView(edit_bio);
 
-        jLabel6.setText("jLabel6");
+        jLabel6.setText("Username");
 
         edit_username.setEditable(false);
 
         save_user.setText("Save");
+        save_user.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                save_userActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout unit_userLayout = new javax.swing.GroupLayout(unit_user);
         unit_user.setLayout(unit_userLayout);
@@ -340,9 +440,9 @@ public class MainTranslate extends javax.swing.JFrame {
                         .addComponent(jLabel4)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(edit_email, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 21, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 40, Short.MAX_VALUE)
                 .addComponent(save_user)
-                .addGap(54, 54, 54))
+                .addGap(29, 29, 29))
         );
 
         panel_content.add(unit_user, "card4");
@@ -406,11 +506,44 @@ public class MainTranslate extends javax.swing.JFrame {
 
     private void translate_buttonActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_translate_buttonActionPerformed
         try {
-            Translate();
+            if(reverseBahasa){
+                Translate();
+            } else {
+                TranslateReverse();
+            }
         } catch (RemoteException ex) {
             Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
         }
     }//GEN-LAST:event_translate_buttonActionPerformed
+
+    private void invert_bahasaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_invert_bahasaActionPerformed
+        revere();
+    }//GEN-LAST:event_invert_bahasaActionPerformed
+
+    private void view_userMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_view_userMouseClicked
+        panel_content.removeAll();
+        panel_content.repaint();
+        panel_content.revalidate();
+        
+        panel_content.add(unit_user);
+        panel_content.repaint();
+        panel_content.revalidate();
+    }//GEN-LAST:event_view_userMouseClicked
+
+    private void save_userActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_save_userActionPerformed
+        userInfo.setBio(edit_bio.getText());
+        userInfo.setEmail(edit_email.getText());
+        userInfo.setNama(edit_nama.getText());
+        try {
+            if(userControl.UserUpdate(userInfo)){
+                JOptionPane.showMessageDialog(this, "Update successfully!");
+            } else {
+                JOptionPane.showMessageDialog(this, "Update faill");
+            }
+        } catch (RemoteException ex) {
+            Logger.getLogger(MainTranslate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }//GEN-LAST:event_save_userActionPerformed
 
     /**
      * @param args the command line arguments
@@ -450,26 +583,34 @@ public class MainTranslate extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JTextArea area_bahasa_asal;
     private javax.swing.JTextArea area_bahasa_tujuan;
+    private javax.swing.JTextArea area_relateble;
     private javax.swing.JTextArea edit_bio;
     private javax.swing.JTextField edit_email;
     private javax.swing.JTextField edit_nama;
     private javax.swing.JTextField edit_username;
     private javax.swing.JButton history_view;
+    private javax.swing.JButton invert_bahasa;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
+    private javax.swing.JScrollPane jScrollPane5;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JButton logout;
     private javax.swing.JPanel panel_content;
     private javax.swing.JButton save_user;
     private javax.swing.JTable tabel_history;
+    private javax.swing.JLabel text_dari;
+    private javax.swing.JLabel text_tujuan;
     private javax.swing.JButton translate_button;
     private javax.swing.JButton translate_view;
     private javax.swing.JPanel unit_history;

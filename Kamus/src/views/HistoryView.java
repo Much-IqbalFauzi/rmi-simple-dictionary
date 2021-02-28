@@ -122,7 +122,7 @@ public class HistoryView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Daftar History");
+        jLabel1.setText("History List");
 
         tblHistory.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {

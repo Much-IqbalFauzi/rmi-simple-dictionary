@@ -7,6 +7,7 @@ package views;
 
 import controllers.historyimplementation;
 import controllers.servercontroller;
+import controllers.translateimplementation;
 import java.rmi.RemoteException;
 import java.util.List;
 import java.util.logging.Level;
@@ -14,6 +15,7 @@ import java.util.logging.Logger;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import models.History;
+import models.Translata;
 import models.User;
 
 /**
@@ -26,15 +28,25 @@ public class AddData extends javax.swing.JFrame {
      * Creates new form MainView
      */
     public boolean status = false;
-    private historyimplementation con;
+    private translateimplementation con;
     
     public AddData(boolean status) throws RemoteException {
         initComponents();
         this.status = status;
-        con = new historyimplementation();
+        con = new translateimplementation();
     }
     
-    
+    private void Load(List<Translata> kamus) {
+        String header[] = {"ID", "ENGLISH", "SPAIN"};
+        String[][] data = new String[kamus.size()][3];
+        for (int i = 0; i < data.length; i++) {
+            data[i][0] = String.valueOf(kamus.get(i).getId());
+            data[i][1] = kamus.get(i).getEn();
+            data[i][2] = kamus.get(i).getSpain();
+        }
+        DefaultTableModel defaultTableModel = new DefaultTableModel(data, header);
+        tabel_data.setModel(defaultTableModel);
+    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -56,6 +68,15 @@ public class AddData extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
         tabel_data = new javax.swing.JTable();
+        inputEnglish = new javax.swing.JTextField();
+        inputSpain = new javax.swing.JTextField();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        deleteData = new javax.swing.JButton();
+        btnUpdate = new javax.swing.JButton();
+        btnInsert = new javax.swing.JButton();
+        kamus_cari = new javax.swing.JTextField();
+        jLabel4 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -135,10 +156,37 @@ public class AddData extends javax.swing.JFrame {
         ));
         jScrollPane1.setViewportView(tabel_data);
 
+        jLabel2.setText("English");
+
+        jLabel3.setText("Spain");
+
+        deleteData.setText("Delete");
+
+        btnUpdate.setText("Update");
+
+        btnInsert.setText("Insert");
+
+        kamus_cari.addKeyListener(new java.awt.event.KeyAdapter() {
+            public void keyPressed(java.awt.event.KeyEvent evt) {
+                kamus_cariKeyPressed(evt);
+            }
+        });
+
+        jLabel4.setText("English Search");
+
         dspMain.setLayer(canvas1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dspMain.setLayer(jPanel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dspMain.setLayer(jLabel1, javax.swing.JLayeredPane.DEFAULT_LAYER);
         dspMain.setLayer(jScrollPane1, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(inputEnglish, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(inputSpain, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(jLabel2, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(jLabel3, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(deleteData, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(btnUpdate, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(btnInsert, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(kamus_cari, javax.swing.JLayeredPane.DEFAULT_LAYER);
+        dspMain.setLayer(jLabel4, javax.swing.JLayeredPane.DEFAULT_LAYER);
 
         javax.swing.GroupLayout dspMainLayout = new javax.swing.GroupLayout(dspMain);
         dspMain.setLayout(dspMainLayout);
@@ -149,14 +197,34 @@ public class AddData extends javax.swing.JFrame {
                 .addGap(18, 18, 18)
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(0, 24, Short.MAX_VALUE)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(30, 30, 30)
-                        .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addContainerGap(26, Short.MAX_VALUE))
-                    .addGroup(dspMainLayout.createSequentialGroup()
                         .addComponent(jLabel1)
-                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
+                        .addGap(0, 0, Short.MAX_VALUE))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
+                        .addGap(0, 24, Short.MAX_VALUE)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
+                                .addComponent(deleteData)
+                                .addGap(204, 204, 204)
+                                .addComponent(btnUpdate)
+                                .addGap(18, 18, 18)
+                                .addComponent(btnInsert))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                .addComponent(jScrollPane1, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                .addGroup(dspMainLayout.createSequentialGroup()
+                                    .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(inputEnglish, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel2, javax.swing.GroupLayout.Alignment.LEADING))
+                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                        .addComponent(jLabel3)
+                                        .addComponent(inputSpain, javax.swing.GroupLayout.PREFERRED_SIZE, 170, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, dspMainLayout.createSequentialGroup()
+                                .addComponent(jLabel4)
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(kamus_cari, javax.swing.GroupLayout.PREFERRED_SIZE, 120, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                .addGap(30, 30, 30)
+                .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(26, Short.MAX_VALUE))
         );
         dspMainLayout.setVerticalGroup(
             dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -166,11 +234,28 @@ public class AddData extends javax.swing.JFrame {
                 .addComponent(jLabel1)
                 .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(81, 81, 81)
+                        .addGap(95, 95, 95)
                         .addComponent(canvas1, javax.swing.GroupLayout.PREFERRED_SIZE, 0, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(dspMainLayout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(kamus_cari, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 116, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(35, 35, 35)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(18, 18, 18)
+                        .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(inputEnglish, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(inputSpain, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                .addGap(39, 39, 39)
+                .addGroup(dspMainLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(deleteData)
+                    .addComponent(btnUpdate)
+                    .addComponent(btnInsert))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -196,7 +281,7 @@ public class AddData extends javax.swing.JFrame {
     }//GEN-LAST:event_btnSettingActionPerformed
 
     private void btnHistoryActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHistoryActionPerformed
-        // TODO add your handling code here:
+        
     }//GEN-LAST:event_btnHistoryActionPerformed
 
     private void btnUserActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnUserActionPerformed
@@ -214,20 +299,33 @@ public class AddData extends javax.swing.JFrame {
     private void btnTransActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTransActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTransActionPerformed
+
+    private void kamus_cariKeyPressed(java.awt.event.KeyEvent evt) {//GEN-FIRST:event_kamus_cariKeyPressed
+        
+    }//GEN-LAST:event_kamus_cariKeyPressed
     
     
     
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHistory;
+    private javax.swing.JButton btnInsert;
     private javax.swing.JButton btnSetting;
     private javax.swing.JButton btnTrans;
+    private javax.swing.JButton btnUpdate;
     private javax.swing.JButton btnUser;
     private java.awt.Canvas canvas1;
+    private javax.swing.JButton deleteData;
     private javax.swing.JDesktopPane dspMain;
+    private javax.swing.JTextField inputEnglish;
+    private javax.swing.JTextField inputSpain;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTextField kamus_cari;
     private javax.swing.JTable tabel_data;
     // End of variables declaration//GEN-END:variables
 }

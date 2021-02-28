@@ -25,7 +25,7 @@ import models.User;
  * @author iqbalfauzi
  */
 public class AppLogin {
-    
+    //LUPAKAN CLASS INI
     public static userinterface uice;
     public static historyinterface hice;
     Translate transl;

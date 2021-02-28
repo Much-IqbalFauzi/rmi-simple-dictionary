@@ -15,6 +15,6 @@ import models.Translata;
  * @author iqbalfauzi
  */
 public interface translateinterface extends Remote {
-    public List<String> DataByKey(String from) throws RemoteException;
+    public List<Translata> DataByKey(String from) throws RemoteException;
     
 }

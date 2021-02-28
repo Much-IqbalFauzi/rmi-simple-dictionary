@@ -58,6 +58,14 @@ public class AppUser {
         return uice.getUserByUsername(name);
     }
     
+    public boolean UserUpdate(User user) throws RemoteException {
+        if(uice.updateUser(user)) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    
     public boolean UserRegister(User user) throws RemoteException {
         boolean res = uice.insertUser(user);
         return res;
@@ -67,7 +75,7 @@ public class AppUser {
         return hice.getHistoryByUsername(username);
     }
     
-    public List<String> TextTranslate(String text) throws RemoteException {
+    public List<Translata> TextTranslate(String text) throws RemoteException {
         return tice.DataByKey(text);
     }
     

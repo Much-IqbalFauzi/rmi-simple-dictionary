@@ -121,7 +121,7 @@ public class UserView extends javax.swing.JFrame {
 
         jLabel1.setFont(new java.awt.Font("Bauhaus 93", 0, 24)); // NOI18N
         jLabel1.setForeground(new java.awt.Color(255, 255, 255));
-        jLabel1.setText("Daftar User");
+        jLabel1.setText("User List");
 
         tblUser.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -234,7 +234,7 @@ public class UserView extends javax.swing.JFrame {
 
         //load data table
     private void load(List<User> users) {
-        String header[] = {"USERNAME", "NAMA", "EMAIL", "PASSWORD","BIO"};
+        String header[] = {"USERNAME", "NAME", "EMAIL", "PASSWORD","BIO"};
         String[][] data = new String[users.size()][5];
         for (int i = 0; i < data.length; i++) {
             data[i][0] = users.get(i).getUsername();
